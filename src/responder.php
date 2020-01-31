@@ -1,6 +1,6 @@
 <?php
 
-namespace Kneejerk;
+namespace Kneejerk\MenuSwapper;
 
 class Responder
 {

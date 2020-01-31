@@ -5,26 +5,27 @@
     Description: Allows you to configure and swap the WordPress Navigation Menus of your theme for logged in users.
     Author: Ryan "Rohjay" Oeltjenbruns
     Author URI: https://rohjay.one/about
-    Version: 0.2
+    Version: 0.3
     Requires at least: 5.0
     Requires PHP: 7.2
 */
 
-namespace Kneejerk;
+namespace Kneejerk\MenuSwapper;
 
 require_once __DIR__ . '/src/responder.php';
-define('KJD_MENU_SWAPPER_OPTION_NAME', 'kjd_menu_swapper_config');
+define( 'KJD_MENU_SWAPPER_OPTION_NAME', 'kjd_menu_swapper_config' );
+define( 'KJD_MENU_SWAPPER_URI', plugin_dir_url(__FILE__) );
 
 // Register the Kneejerk Admin Menu
-\add_action('admin_menu', 'Kneejerk\register_admin_menu');
+\add_action('admin_menu', 'Kneejerk\MenuSwapper\register_admin_menu');
 function register_admin_menu() {
     \add_menu_page(
         $page_title             = 'Menu Swapper by Kneejerk Development',
         $menu_title             = 'Menu Swapper',
         $capability_required    = 'administrator',
         $menu_slug              = 'kneejerk',
-        $callable_function      = 'Kneejerk\admin_menu',
-        $icon_url               = \plugins_url( 'images/admin_icon.svg', __FILE__ ) // baller icon incoming!
+        $callable_function      = 'Kneejerk\MenuSwapper\admin_menu',
+        $icon_url               = \plugins_url( 'images/wp_logo.png', __FILE__ ) // baller icon incoming!
     );
 }
 
@@ -41,6 +42,9 @@ function admin_menu() {
         'menu_locations' => \get_nav_menu_locations(),
         'config' => \get_option(KJD_MENU_SWAPPER_OPTION_NAME, [])
     ];
+
+    // echo "<plaintext>"; var_dump($data['theme_menus']); exit();
+
     $responder = new Responder(__DIR__ . DIRECTORY_SEPARATOR . 'templates');
     $responder->view('admin-menu.php', $data);
 }
@@ -54,7 +58,7 @@ function plugin_action_links($links, $file) {
 }
 
 // Make sure our admin page has jQuery loaded (don't need to load it for everything wp-admin)
-\add_action( 'admin_enqueue_scripts', 'Kneejerk\enqueue_admin_scripts_and_styles' );
+\add_action( 'admin_enqueue_scripts', 'Kneejerk\MenuSwapper\enqueue_admin_scripts_and_styles' );
 function enqueue_admin_scripts_and_styles($hook) {
     if ( $hook !== 'toplevel_page_kneejerk' ) {
         return;
@@ -63,15 +67,15 @@ function enqueue_admin_scripts_and_styles($hook) {
 }
 
 // Hook our ajax request, but only if we're doing ajax, and only if the request is by an administrator
-\add_action( 'init', 'Kneejerk\hook_ajax_requests' );
+\add_action( 'init', 'Kneejerk\MenuSwapper\hook_ajax_requests' );
 function hook_ajax_requests() {
     if ( defined('DOING_AJAX') && DOING_AJAX && current_user_can('administrator') ) {
-        \add_action( 'wp_ajax_kjd_configure_menu_swapper', 'Kneejerk\configure_menu_swapper' );
+        \add_action( 'wp_ajax_kjd_configure_menu_swapper', 'Kneejerk\MenuSwapper\configure_menu_swapper' );
     }
 }
 
 // Code that hooks the nav menus, checks for a swappable configuration for a logged in user, and swap them!
-\add_filter( 'wp_nav_menu_args', 'Kneejerk\wp_nav_menu_swapper', PHP_INT_MAX );
+\add_filter( 'wp_nav_menu_args', 'Kneejerk\MenuSwapper\wp_nav_menu_swapper', PHP_INT_MAX );
 function wp_nav_menu_swapper( $args = [] ) {
     // Get our swapper config
     $kjd_config = \get_option(KJD_MENU_SWAPPER_OPTION_NAME);
@@ -92,8 +96,12 @@ function configure_menu_swapper() {
 
     $responder = new Responder();
     if ( $result ) {
-        $responder->json($_POST);
+        $responder->json(true);
     } else {
+        $original = \get_option(KJD_MENU_SWAPPER_OPTION_NAME);
+        if ( $original == $_POST ) {
+            $responder->json(true);
+        }
         $responder->error('Failed to update option', 500);
     }
 }

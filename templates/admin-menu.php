@@ -2,66 +2,28 @@
     .postbox.maxxer {
         max-width: 992px;
     }
+    .text-green {
+        color: green;
+    }
+    .text-red {
+        color: red;
+    }
 </style>
+
 <div id="wpbody" role="main">
     <div id="wpbody-content" aria-label="Main content" tabindex="0">
         <div class="wrap">
-            <h1 class="wp-heading-inline">Kneejerk Development Menu Swapper</h1>
-            <div class="postbox maxxer">
-                <div class="inside">
-                    <h2>Menu Configurations</h2>
-                    <hr>
-                    <div class="main">
-                        <form id="kjd-menu-swapper-form" method="POST">
-                            <table class="form-table">
-                                <thead>
-                                    <tr>
-                                        <th>Theme Menu Location</th>
-                                        <th>Default (all users)</th>
-                                        <th>Logged In Menu Swap</th>
-                                        <th>Enable Swap!</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ( $data['theme_menus'] as $nav_slug => $nav_name ) {
-                                        $menu_id = $data['menu_locations'][$nav_slug] ?? false;
-                                        $configured_menu = isset($data['config'][$nav_slug]) ? $data['config'][$nav_slug] : false;
-                                        $default_menu = $data['menus'][$menu_id]->name ?? 'None Selected';
-                                    ?>
-                                    <tr>
-                                        <th scope="row"><?php echo $nav_name ?> [<?php echo $nav_slug ?>]</th>
-                                        <td>
-                                            <?php echo $default_menu ?>
-                                            <?php if ($menu_id) { ?>
-                                            [<a href="<?php echo admin_url("nav-menus.php?action=edit&menu=$menu_id") ?>">configure menu</a>]
-                                            <?php } ?>
-                                        </td>
-                                        <td>
-                                            <select name="<?php echo $nav_slug ?>[swap]">
-                                                <option value=''>None</option>
-                                                <?php foreach ( $data['menus'] as $menu ) {
-                                                    $selected = $configured_menu && $configured_menu['swap'] == $menu->slug;
-                                                    ?>
-                                                <option value="<?php echo $menu->slug ?>"<?php echo $selected ? ' selected="selected"' : '' ?>><?php echo $menu->name ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="checkbox" name="<?php echo $nav_slug ?>[enabled]"<?php echo isset($configured_menu['enabled']) ? ' checked="checked"' : '' ?>>
-                                        </td>
-                                    </tr>
-                                    <?php } ?>
-                                    <tr>
-                                        <td colspan=4>
-                                            <button id="kjd-menu-swapper-submit-btn">Save</button>
-                                            <span id="kjd-menu-swapper-results"></span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                    </div>
-                </div>
+            <h1 class="wp-heading-inline"><img src="<?php echo \plugins_url( 'images/logo.svg', __DIR__ . '/../../' ) ?>" height="32" width="32" style="fill: rgb(35, 40, 45);margin-right:-8px;margin-bottom:-8px">neejerk Development Menu Swapper</h1>
+            <hr>
+            <h2 class="nav-tab-wrapper wp-clearfix">
+                <a href="#kjd-config" id="kjd-config-nav" class="nav-tab nav-tab-active" data-tab="kjd-config-tab">Config</a>
+                <a href="#kjd-about" id="kjd-about-nav" class="nav-tab" data-tab="kjd-about-tab">About</a>
+            </h2>
+            <div id="kjd-config-tab" class="kjd-display-content">
+                <?php $this->view('config.php', $data); ?>
+            </div>
+            <div id="kjd-about-tab" class="kjd-display-content hidden">
+                <?php $this->view('about.php', $data); ?>
             </div>
         </div>
     </div><!-- wpbody-content -->
@@ -69,24 +31,54 @@
 <script type="text/javascript">
 (function($) {
     // Save new Trial plan info
+    var kjdNavigationTabs = $('.nav-tab');
     var kjdMenuSwapperForm = $('#kjd-menu-swapper-form');
     var kjdMenuSwapperSubmitBtn = $('#kjd-menu-swapper-submit-btn');
     var kjdMenuSwapperResults = $('#kjd-menu-swapper-results');
+
+    // Tab navigation handling
+    if ( location.hash ) {
+        // The location hash is the base, then the nav tab is -nav, and the tab is -tab.
+        // This way the browser doesn't move the window when you click a new tab.
+        var navTab = $(location.hash+'-nav');
+        kjdNavTabSwap(navTab);
+    }
+
+    // Manage the swap
+    kjdNavigationTabs.click(function(e){
+        e.preventDefault();
+        kjdNavTabSwap($(this));
+    });
+
+    function kjdNavTabSwap(navTab) {
+        // Update the tabs to show the current/active one
+        kjdNavigationTabs.removeClass('nav-tab-active');
+        navTab.addClass('nav-tab-active');
+
+        // Manage which tab is actually visible
+        var tabName = '#'+navTab.data('tab');
+        $('.kjd-display-content').addClass('hidden');
+        $(tabName).removeClass('hidden');
+
+        // gives the base of the ID, not an actual html element id to prevent jarring window movements.
+        location.hash = navTab.attr('href');
+    }
+
     kjdMenuSwapperForm.submit(function(e) {
         e.preventDefault();
         var originalMsg = kjdMenuSwapperSubmitBtn.html();
         kjdMenuSwapperSubmitBtn.html('Saving...');
-        kjdMenuSwapperResults.html('&nbsp;').addClass('hidden');
+        kjdMenuSwapperResults.html('&nbsp;').addClass('hidden').removeClass('text-red text-green');
         $.ajax({
             type: kjdMenuSwapperForm.attr('method'),
             url: ajaxurl + '?action=kjd_configure_menu_swapper',
             data: kjdMenuSwapperForm.serialize(),
             dataType: 'json',
             success: function(data) {
-                kjdMenuSwapperResults.html('Successfully saved new configuration!');
+                kjdMenuSwapperResults.html('Successfully saved new configuration!').addClass('text-green');
             },
             error: function(xhr) {
-                kjdMenuSwapperResults.html(`New configuration did not save: ${xhr.statusText}`);
+                kjdMenuSwapperResults.html(`New configuration did not save: ${xhr.statusText}`).addClass('text-red');
             },
             complete: function() {
                 kjdMenuSwapperSubmitBtn.html(originalMsg);
