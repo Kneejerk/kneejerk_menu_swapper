@@ -13,9 +13,9 @@ Please report any bugs or feel free to give me any feedback at
 
 ## How does it work
 
-After installing KJD Menus Swapper, you'll see the Menu Swapper on the left (at this point, you're
-probably already familiar with it). Once you click there, you'll be presented with the configuration
-for the plugin. This plugin does a few things to work:
+After installing KJD Menu Swapper, you'll see the Menu Swapper on the left admin navigation (at this
+point, you're probably already familiar with it). Once you click there, you'll be presented with the
+configuration for the plugin. This plugin does a few things to work:
 
 1.  KJD grabs the menus that your theme has registered. Whatever your theme, if it registers its menus
     properly, KJD Menu Swapper will find it =]

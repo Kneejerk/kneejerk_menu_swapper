@@ -17,7 +17,7 @@
 
             <h3>How does it work</h3>
             <p>
-                After installing KJD Menus Swapper, you'll see the Menu Swapper on the left (at this point, you're
+                After installing KJD Menu Swapper, you'll see the Menu Swapper on the left admin navigation (at this point, you're
                 probably already familiar with it). Once you click there, you'll be presented with the configuration
                 for the plugin. This plugin does a few things to work:
             </p>
