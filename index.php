@@ -5,7 +5,7 @@
     Description: Allows you to configure and swap the WordPress Navigation Menus of your theme for logged in users.
     Author: Ryan "Rohjay" Oeltjenbruns
     Author URI: https://rohjay.one/about
-    Version: 0.3
+    Version: 0.3.0
     Requires at least: 5.0
     Requires PHP: 7.2
 */

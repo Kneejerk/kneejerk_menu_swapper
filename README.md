@@ -43,6 +43,6 @@ from people who are using it like you!
 
 More great plugins to come, so keep in touch, and stay tuned to Kneejerk Development!
 
-Sincerely,
-Ryan "Rohjay" Oeltjenbruns
+Sincerely,\
+Ryan "Rohjay" Oeltjenbruns\
 [Kneejerk Development](https://kneejerk.dev)
