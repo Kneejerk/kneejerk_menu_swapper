@@ -2,12 +2,13 @@
 /*
     Plugin Name: Kneejerk Menu Swapper
     Plugin URI: https://kneejerk.dev/menu-swapper
-    Description: Allows you to configure and swap the WordPress Navigation Menus of your theme for logged in users.
+    Description: Allows you to configure and swap WordPress Navigation Menus of your theme for logged in users.
     Author: Ryan "Rohjay" Oeltjenbruns
     Author URI: https://rohjay.one/about
-    Version: 0.3.0
+    Version: 0.3.1
     Requires at least: 5.0
     Requires PHP: 7.2
+    Tags: Menus, Navigation, logged in, users
 */
 
 namespace Kneejerk\MenuSwapper;
