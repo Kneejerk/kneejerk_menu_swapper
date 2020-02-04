@@ -5,6 +5,7 @@
         <div class="main">
             <form id="kjd-menu-swapper-form" method="POST">
                 <table class="form-table">
+                    <?php if ( !empty($data['theme_menus']) ) { ?>
                     <thead>
                         <tr>
                             <th>Theme Menu Location</th>
@@ -49,6 +50,9 @@
                             </td>
                         </tr>
                     </tbody>
+                    <?php } else { ?>
+                    <caption>No registered menus found for the current theme</caption>
+                    <?php } ?>
                 </table>
             </form>
         </div>
