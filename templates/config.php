@@ -39,7 +39,7 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="checkbox" name="<?php echo $nav_slug ?>[enabled]"<?php echo isset($configured_menu['enabled']) ? ' checked="checked"' : '' ?>>
+                                <input type="checkbox" name="<?php echo $nav_slug ?>[enabled]"<?php echo isset($configured_menu['enabled']) && $configured_menu['enabled'] ? ' checked="checked"' : '' ?>>
                             </td>
                         </tr>
                         <?php } ?>

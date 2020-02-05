@@ -5,7 +5,7 @@
     Description: Allows you to configure and swap WordPress Navigation Menus of your theme for logged in users.
     Author: Ryan "Rohjay" Oeltjenbruns
     Author URI: https://rohjay.one/about
-    Version: 0.3.1
+    Version: 1.0.0
     Requires at least: 5.0
     Requires PHP: 7.2
     Tags: Menus, Navigation, logged in, users
@@ -78,14 +78,19 @@ function hook_ajax_requests() {
 // Code that hooks the nav menus, checks for a swappable configuration for a logged in user, and swap them!
 \add_filter( 'wp_nav_menu_args', 'Kneejerk\MenuSwapper\wp_nav_menu_swapper', PHP_INT_MAX );
 function wp_nav_menu_swapper( $args = [] ) {
+    // Make sure we have a theme location, otherwise it's folly to continue *fistshake*!
+    if ( empty($args['theme_location']) ) {
+        return $args;
+    }
+
     // Get our swapper config
     $kjd_config = \get_option(KJD_MENU_SWAPPER_OPTION_NAME);
 
     // Pull out the config for this menu location for swapping
     $menu_config = isset($kjd_config[$args['theme_location']]) ? $kjd_config[$args['theme_location']] : false;
 
-    // If we have a config, the user is logged in, there is a menu to swap to, and it's enabled...
-    if( $menu_config && \is_user_logged_in() && !empty($menu_config['swap']) && isset($menu_config['enabled']) ) {
+    // If we have a config, the user is logged in, there is a menu to swap to, and it's enabled (truthy)...
+    if( $menu_config && \is_user_logged_in() && !empty($menu_config['swap']) && $menu_config['enabled'] ) {
         // Swap out the menu =]
         $args['menu'] = $menu_config['swap'];
     }
@@ -93,14 +98,38 @@ function wp_nav_menu_swapper( $args = [] ) {
 }
 
 function configure_menu_swapper() {
-    $result = \update_option(KJD_MENU_SWAPPER_OPTION_NAME, $_POST, 'yes');
+    // Grab the different menu pieces to ensure good data
+    $theme_menus = \get_registered_nav_menus() ?: [];
+    $menu_slugs = [];
+    foreach ( \wp_get_nav_menus() as $menu ) {
+        $menu_slugs[] = $menu->slug;
+    }
 
+    // Let's start to build our config from the $_POST
+    $submitted_config = $_POST;
+    $config = [];
+    foreach ( array_keys($theme_menus) as $menu ) { // For all the theme menus
+        // If the submitted menu config is a valid theme menu slug & references a valid created menu to swap to...
+        if ( !empty($submitted_config[$menu]['swap']) && in_array($submitted_config[$menu]['swap'], $menu_slugs) ) {
+            // Add it to our config
+            $config[$menu] = [
+                'swap' => sanitize_text_field($submitted_config[$menu]['swap']),
+                'enabled' => $submitted_config[$menu]['enabled'] ? true : false
+            ];
+        }
+    }
+
+    // Update the config, set to autoload. Should be small unless a theme has 900 nav menus... in which case, the theme
+    // is more likely the bigger performance problem.
+    $result = \update_option(KJD_MENU_SWAPPER_OPTION_NAME, $config, 'yes');
+
+    // Return a result to the front end (using the Responder)
     $responder = new Responder();
     if ( $result ) {
         $responder->json(true);
     } else {
         $original = \get_option(KJD_MENU_SWAPPER_OPTION_NAME);
-        if ( $original == $_POST ) {
+        if ( $original == $config ) {
             $responder->json(true);
         }
         $responder->error('Failed to update option', 500);

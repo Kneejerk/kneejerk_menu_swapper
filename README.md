@@ -1,6 +1,6 @@
 # Menu Swapper for WordPress
 
-Contextually swaps menus for logged in users - for WordPress!
+Contextually swaps menus in your theme for logged in users - for WordPress!
 
 ## What is Kneejerk Development Menu Swapper
 
@@ -24,17 +24,17 @@ configuration for the plugin. This plugin does a few things to work:
 
 3.  If a menu is configured for a registered theme menu, KJD Menu Swapper will show you. Otherwise,
     it'll say "None Selected" like this:
-    ![Example](/docs/twenty_twenty_example.png)
+    ![Example](/assets/twenty_twenty_example.png)
 
 4.  In the dropdown next to what the theme is configured for, you have the option to "swap" it when the
-    visitor is logged in:<br>
-    ![Menu Select](/docs/twenty_twenty_menu_select.png)
+    visitor is logged in:
+    ![Menu Select](/assets/twenty_twenty_menu_select.png)
 
-5.  Click the enable checkbox for that menu to enable the swap:<br>
-    ![Enable Swap](/docs/twenty_twenty_configure_enable.png)
+5.  Click the enable checkbox for that menu to enable the swap:
+    ![Enable Swap](/assets/twenty_twenty_configure_enable.png)
 
-6.  Next, bonk the "Save" button, and the menu swap is live!<br>
-    ![Bonk save](/docs/twenty_twenty_save.png)
+6.  Next, bonk the "Save" button, and the menu swap is live!
+    ![Bonk save](/assets/twenty_twenty_save.png)
 
 ## A Note from the Author
 
