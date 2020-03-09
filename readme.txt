@@ -1,5 +1,5 @@
 === Kneejer Menu Swapper ===
-Contributors: Rohjay (Ryan Oeltjenbruns)
+Contributors: RedEarRyan (Ryan "Rohjay" Oeltjenbruns)
 Donate link: coming soon?
 Tags: Menus, Navigation, Logged in
 Requires at least: 5.0
@@ -13,7 +13,7 @@ Contextually swaps menus in your theme for logged in users.
 
 == Description ==
 
-### What is Menu Swapper
+### What is KJD Menu Swapper
 
 This Plugin designed to allow you to contextualize the menus in your theme based on
 whether or not your visitor is logged in or not. It's especially handy when this functionality is
