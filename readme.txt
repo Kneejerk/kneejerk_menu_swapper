@@ -1,5 +1,5 @@
 === Kneejer Menu Swapper ===
-Contributors: RedEarRyan (Ryan "Rohjay" Oeltjenbruns)
+Contributors: RedEarRyan
 Donate link: coming soon?
 Tags: Menus, Navigation, Logged in
 Requires at least: 5.0
@@ -90,6 +90,10 @@ back to the KJD Menu Swapper page to configure which ones you'd like to swap to!
 
 = 1.0.0 =
 Initial Version (first round of WP Plugin Repo code review)
+
+== Upgrade Notice ==
+= 1.0 =
+Initial Public Version
 
 == Arbitrary section ==
 
