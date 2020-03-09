@@ -30,20 +30,20 @@
                 <li>
                     If a menu is configured for a registered theme menu, KJD Menu Swapper will show you. Otherwise,
                     it'll say "None Selected" like this:<br>
-                    <img src="<?php echo KJD_MENU_SWAPPER_URI ?>/assets/twenty_twenty_example.png" style="margin: .4em; outline:1px dashed red">
+                    <img src="<?php echo KJD_MENU_SWAPPER_URI ?>/images/twenty_twenty_example.png" style="margin: .4em; outline:1px dashed red">
                 </li>
                 <li>
                     In the dropdown next to what the theme is configured for, you have the option to "swap" it when the
                     visitor is logged in:<br>
-                    <img src="<?php echo KJD_MENU_SWAPPER_URI ?>/assets/twenty_twenty_menu_select.png" style="margin: .4em; outline:1px dashed red">
+                    <img src="<?php echo KJD_MENU_SWAPPER_URI ?>/images/twenty_twenty_menu_select.png" style="margin: .4em; outline:1px dashed red">
                 </li>
                 <li>
                     Click the enable checkbox for that menu to enable the swap:<br>
-                    <img src="<?php echo KJD_MENU_SWAPPER_URI ?>/assets/twenty_twenty_configure_enable.png" style="margin: .4em; outline:1px dashed red">
+                    <img src="<?php echo KJD_MENU_SWAPPER_URI ?>/images/twenty_twenty_configure_enable.png" style="margin: .4em; outline:1px dashed red">
                 </li>
                 <li>
                     Next, bonk the "Save" button, and the menu swap is live!<br>
-                    <img src="<?php echo KJD_MENU_SWAPPER_URI ?>/assets/twenty_twenty_save.png" style="margin: .4em; outline:1px dashed red">
+                    <img src="<?php echo KJD_MENU_SWAPPER_URI ?>/images/twenty_twenty_save.png" style="margin: .4em; outline:1px dashed red">
                 </li>
             </ol>
             <p>
