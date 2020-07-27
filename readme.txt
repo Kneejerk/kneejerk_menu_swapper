@@ -38,7 +38,7 @@ After installing KJD Menu Swapper, you'll see the Menu Swapper on the left admin
 
 == Frequently Asked Questions ==
 
-= Why should I used this plugin? =
+= Why should I use this plugin? =
 
 The best examples of how to use this plugin are where you have a navigation menu with login/logout functionality, or perhaps you'd like to add items to your navigation menus for when someone is logged in. In these scenarios, figure out which location the menu title is describing, create another menu in the wp-admin's Appearance -> Menus similar to it (with the additions and/or changes), and use that menu for the swap.
 
@@ -64,6 +64,9 @@ KJD Menu Swapper isn't built to disable menus by design. If this is a feature th
 2. This shows you where it gets the list of menus you can use. Create, set them to locations in your theme, then come back to the KJD Menu Swapper page to configure which ones you'd like to swap to!
 
 == Changelog ==
+
+=1.0.2=
+Fixed readme typo - whoops!
 
 =1.0.1=
 Formatting so the Repo information is correct and doesn't look terrible!
