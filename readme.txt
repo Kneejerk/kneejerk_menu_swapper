@@ -3,9 +3,9 @@ Contributors: RedEarRyan
 Donate link: coming soon?
 Tags: Menus, Navigation, Logged in
 Requires at least: 5.0
-Tested up to: 5.3
+Tested up to: 5.8
 Requires PHP: 7.2
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,9 @@ KJD Menu Swapper isn't built to disable menus by design. If this is a feature th
 
 == Changelog ==
 
+=1.1.0=
+Tested on WP 5.8 and incremented plugin version #
+
 =1.0.2=
 Fixed readme typo - whoops!
 
@@ -84,8 +87,6 @@ Initial Public Version
 ### A Note from the Author
 
 It's designed to be pretty easy to use, but this plugin will only get better with constructive feedback from people who are using it like you!
-
-More great plugins to come, so keep in touch - and stay tuned to Kneejerk Development!
 
 Sincerely,
 Ryan "Rohjay" Oeltjenbruns
